@@ -1,6 +1,6 @@
 # Real-time-chat-application
 
- # This chat application is Created using 
+  <h2>This chat application is Created using </h2>
  <h3>* Reactjs </h3>
   <h3>* Mongodb</h3>
   <h3>* Express.js</h3>

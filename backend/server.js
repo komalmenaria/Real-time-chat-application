@@ -1,7 +1,8 @@
 const express = require('express')
 const {chats} = require("./data/data")
 const app = express()
-const PORT = 5000
+const PORT = process.env.PORT || 5000
+
 
 
 
@@ -17,10 +18,10 @@ res.send(chats)
 
 
 app.get("/api/chats/:id", (req, res, next) =>{
-console.log(req)
-res.send(req.params)
-
+const singleChat = chats.find((c)=>c._id === req.params.id)
+res.send(singleChat)
     })
+
 
 app.listen(PORT,console.log(`Server listening on port ${PORT}`))
 

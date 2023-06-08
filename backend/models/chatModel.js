@@ -14,7 +14,7 @@ const chatModel = mongoose.Schema({
             ref: "User",
         },
     ],
-    lateshMessage:{
+    latestMessage:{
         type: mongoose.Schema.Types.ObjectId,
         ref: "Message" ,
     },

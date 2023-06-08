@@ -5,6 +5,7 @@ const app = express()
 const connectDB = require('./config/db')
 const PORT = process.env.PORT || 5000
 const userRoutes = require("./routes/userRoutes")
+const chatRoutes = require("./routes/chatRoutes")
 const bodyParser = require('body-parser')
 const fileUpload = require("express-fileupload");
 var cors = require('cors')
@@ -23,6 +24,7 @@ app.get('/', (req, res, next) =>{
     res.send(' API is running')
 })
 app.use('/api/user',userRoutes)
+app.use('/api/chat',chatRoutes)
 app.use(notFound)
 app.use(errorHandler)
 

@@ -2,16 +2,10 @@ const crypto = require('crypto');
 // Use the generated secret key in your code
 const jwt = require('jsonwebtoken');
 
-const generateSecretKey = () => {
-  return crypto.randomBytes(64).toString('hex');
-};
-
-const secretKey = generateSecretKey();
-console.log(secretKey); 
-
+require('dotenv').config();
 
 const generateToken = (id) => {
-  return jwt.sign({ id }, secretKey, {
+  return jwt.sign({ id }, process.env.JWT_SECRET, {
     expiresIn: '30d'
   });
 };

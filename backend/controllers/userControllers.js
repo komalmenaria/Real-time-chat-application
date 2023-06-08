@@ -5,9 +5,19 @@ const generateToken = require("../config/generateToken")
 
 const registerUser = asyncHandler(async (req, res) => {
     const { name, email, password, pic } = req.body;
-    if (!name || !email || !password) {
+    console.log(name + " " + email + " " + password)
+
+    if (!name) {
         res.status(400);
-        throw new Error("Please Enter in all the fields")
+        throw new Error("Please Enter name");
+    }
+    if (!email) {
+        res.status(400);
+        throw new Error("Please Enter email");
+    }
+    if (!password) {
+        res.status(400);
+        throw new Error("Please Enter password");
     }
     const userExists = await User.findOne({ email })
     if (userExists) {
@@ -53,4 +63,14 @@ const authUser = asyncHandler(async (req, res) => {
         throw new Error("Invalid email or password");
     }
 })
-module.exports = { registerUser, authUser };
+
+const allUsers = asyncHandler(async (req, res) => {
+    const keyword = req.query.search ? {
+        $or: [{ name: { $regex: req.query.search, $options: "i" } },
+        { email: { $regex: req.query.search, $options: "i" } },
+        ]
+    } : {};
+    const users = await User.find(keyword).find({_id:{$ne:req.user._id}});
+    res.send(users);
+ });
+module.exports = { registerUser, authUser, allUsers };

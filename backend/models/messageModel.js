@@ -10,7 +10,7 @@ const messageModel = mongoose.Schema({
         ref: "Chat"
     },
 },{
-    timestamp:true,
+    timestamps:true,
 })
 const Message = mongoose.model('Message', messageModel);
 module.exports = Message;

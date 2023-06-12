@@ -6,6 +6,8 @@ const connectDB = require('./config/db')
 const PORT = process.env.PORT || 5000
 const userRoutes = require("./routes/userRoutes")
 const chatRoutes = require("./routes/chatRoutes")
+const messageRoutes = require("./routes/messageRoutes")
+
 const bodyParser = require('body-parser')
 const fileUpload = require("express-fileupload");
 var cors = require('cors')
@@ -25,11 +27,22 @@ app.get('/', (req, res, next) =>{
 })
 app.use('/api/user',userRoutes)
 app.use('/api/chat',chatRoutes)
+app.use('/api/message',messageRoutes)
 app.use(notFound)
 app.use(errorHandler)
 
 
 
 
-app.listen(PORT,console.log(`Server listening on port ${PORT}`))
+const server = app.listen(PORT,console.log(`Server listening on port ${PORT}`))
+const io = require('socket.io')(server,{
+    pingTimeout:60000,
+    cors:{
+        origin:"http://localhost:3000",
+    }
+})
+
+io.on("connection" , (socket)=>{
+console.log("Connected to   socket.io") 
+})
 
